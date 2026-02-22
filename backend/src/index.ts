@@ -1,22 +1,17 @@
-import express, { Request, Response, Application } from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+import app from "./app";
+import { connectDatabase } from "./config/database";
 
-dotenv.config();
-
-const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
-app.use(express.json());
+const startServer = async () => {
+  try {
+    await connectDatabase();
+    app.listen(PORT, () => {
+      console.log(`Server listening on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("Error starting server:", error);
+  }
+};
 
-app.get("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: "FoodWay Server is running successfully with TSX!",
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server is flying on http://localhost:${PORT}`);
-});
+startServer();
