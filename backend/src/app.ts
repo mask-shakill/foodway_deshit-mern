@@ -1,15 +1,19 @@
-import express, { Application } from "express";
+import express, { Application, Router } from "express";
 import cors from "cors";
-import auth from "./routes/auth.routes";
+import authRoutes from "./routes/auth.routes";
+import categoryRoutes from "./routes/category.routes";
+import { globalErrorHandler } from "./middlewares/error.middleware";
+
 const app: Application = express();
 
 app.use(cors());
 app.use(express.json());
+const apiRouter = Router();
+apiRouter.use("/auth", authRoutes);
+apiRouter.use("/categories", categoryRoutes);
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Server is running" });
-});
+app.use("/api", apiRouter);
 
-app.use("/api/auth", auth);
+app.use(globalErrorHandler);
 
 export default app;
