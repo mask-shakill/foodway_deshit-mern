@@ -24,6 +24,7 @@
     "express": "^5.2.1",
     "firebase-admin": "^13.6.1",
     "mongoose": "^9.2.1",
+    "multer": "^2.0.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
